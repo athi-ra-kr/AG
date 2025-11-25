@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +44,7 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
-            z-index: 100; 
+            z-index: 100; /* Bring to front but let click pass through */
             overflow: hidden;
         }
         .heart-float {
@@ -72,16 +73,14 @@
             text-align: center;
             margin-bottom: 0.5rem;
             color: var(--dark-green);
-            line-height: 1.2;
         }
         .section-subtitle {
             text-align: center;
             font-family: var(--font-script);
             color: var(--gold-accent);
-            font-size: 2.2rem;
+            font-size: 2.2rem; /* Increased size slightly for readability */
             margin-bottom: 3.5rem;
-            text-transform: capitalize;
-            line-height: 1.4;
+            text-transform: capitalize; /* Forces the first letter of every word to be Capital */
         }
 
         /* Decorative Static Stickers */
@@ -104,8 +103,7 @@
         /* :::: HERO SECTION :::: */
         .hero {
             position: relative;
-            height: 100vh; /* Fallback */
-            height: 100dvh; /* Mobile browser friendly */
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -115,8 +113,7 @@
         .hero-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* Make sure image path matches your folder */
-            background: url("images/banner-photo.jpg.png.png") no-repeat center center/cover;
+            background: url("{% static 'invite/images/banner-photo.jpg.png.png' %}") no-repeat center center/cover;
             filter: brightness(0.9);
             transform: scale(1.05);
             z-index: -2;
@@ -128,28 +125,23 @@
         }
         .hero-content h1 {
             font-family: var(--font-decorative);
-            font-size: 3.5rem; /* Mobile default */
+            font-size: 4rem;
             margin-bottom: 0.5rem;
             color: #fff;
             text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-            line-height: 1.1;
-            padding: 0 10px;
         }
         .hero-content .hero-names-script {
             font-family: var(--font-script);
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: #f0f7f4;
             display: block;
             margin-bottom: 1rem;
         }
-        @media (min-width: 768px) { 
-            .hero-content h1 { font-size: 5.5rem; } 
-            .hero-content .hero-names-script { font-size: 3rem; }
-        }
+        @media (min-width: 768px) { .hero-content h1 { font-size: 5.5rem; } }
         
         .hero-date {
             font-family: var(--font-heading);
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             letter-spacing: 2px;
             color: #fff;
             background: rgba(255,255,255,0.2);
@@ -158,7 +150,6 @@
             backdrop-filter: blur(5px);
             display: inline-block;
             border: 1px solid rgba(255,255,255,0.4);
-            margin-top: 10px;
         }
 
         /* :::: COUNTDOWN :::: */
@@ -172,35 +163,31 @@
             background: rgba(255, 255, 255, 0.95);
             max-width: 800px;
             margin: 0 auto;
-            padding: 30px 20px;
+            padding: 40px;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(85, 107, 47, 0.15);
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
             border: 1px solid var(--primary-green);
         }
-        .cd-box { text-align: center; min-width: 60px; position: relative; }
-        
-        @media (min-width: 600px) {
-            .cd-box:not(:last-child)::after {
-                content: ":";
-                position: absolute; right: -10px; top: 15%;
-                font-size: 2rem; color: #ddd;
-            }
+        .cd-box { text-align: center; min-width: 90px; position: relative; }
+        .cd-box:not(:last-child)::after {
+            content: ":";
+            position: absolute; right: -12px; top: 15%;
+            font-size: 2rem; color: #ddd;
         }
-
         .cd-number {
             font-family: var(--font-heading);
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--dark-green);
             line-height: 1;
         }
         .cd-label {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             color: var(--gold-accent);
             margin-top: 5px;
             font-weight: 600;
@@ -210,7 +197,7 @@
         .couple-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 40px;
+            gap: 50px;
             margin-top: 30px;
             align-items: center;
         }
@@ -221,9 +208,8 @@
         .couple-card { text-align: center; position: relative; }
         
         .couple-img-wrapper {
-            width: 260px;
-            max-width: 100%;
-            height: 360px;
+            width: 280px;
+            height: 380px;
             margin: 0 auto 25px;
             position: relative;
             border-radius: 150px 150px 20px 20px; 
@@ -236,6 +222,7 @@
             width: 100%; height: 100%; object-fit: cover;
             border-radius: 140px 140px 15px 15px;
         }
+        /* Heart sticker on image corner */
         .couple-img-wrapper::before {
             content: "❤";
             color: var(--heart-red);
@@ -258,7 +245,6 @@
         }
         .couple-parents {
             font-size: 1rem; color: #666; line-height: 1.6;
-            padding: 0 10px;
         }
         .couple-ampersand {
             font-family: var(--font-script);
@@ -268,8 +254,8 @@
             opacity: 0.6;
         }
 
-        /* :::: GALLERY SECTION (FIXED FOR MOBILE) :::: */
-        .gallery-section { background: white; position: relative; }
+        /* :::: GALLERY SECTION :::: */
+        .gallery-section { background: var(--white-bg); position: relative; }
         .gallery-section::before {
             content: "";
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -279,37 +265,29 @@
             z-index: 0;
         }
         
-        /* MASONRY LAYOUT FIX */
         .gallery-grid {
-            /* This forces 3 columns and allows items to stack without cropping */
-            column-count: 3; 
-            column-gap: 8px; 
-            position: relative; 
-            z-index: 1;
+            column-count: 3; column-gap: 15px; position: relative; z-index: 1;
         }
-        
+        @media (max-width: 900px) { .gallery-grid { column-count: 2; } }
+        @media (max-width: 600px) { .gallery-grid { column-count: 1; } }
+
         .gallery-item {
-            /* Prevents image from splitting between columns */
-            break-inside: avoid; 
-            margin-bottom: 8px;
+            margin-bottom: 15px;
             border-radius: 8px;
             overflow: hidden;
-            border: 3px solid white;
+            border: 4px solid white;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            break-inside: avoid;
         }
-        
         .gallery-item img {
-            width: 100%; 
-            height: auto; /* IMPORTANT: Shows full image height */
-            display: block; 
-            transition: transform 0.5s ease;
+            width: 100%; display: block; transition: transform 0.5s ease;
         }
         .gallery-item:hover img { transform: scale(1.05); }
 
         /* :::: EVENTS SECTION :::: */
         .events-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
         .event-box {
@@ -359,30 +337,24 @@
         .footer-names {
             font-family: var(--font-script);
             color: var(--primary-green);
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 10px;
-            letter-spacing: 1px;
-            line-height: 1.2;
+            letter-spacing: 2px;
         }
+        /* Style for Large First Letters */
         .footer-names span {
-            font-size: 3.5rem; 
-            color: #fff; 
+            font-size: 4.5rem; /* Larger first letter */
+            color: #fff;       /* White to stand out against green */
             font-weight: 700;
             vertical-align: middle;
-            font-family: var(--font-decorative);
-        }
-        
-        /* Mobile Adjustments */
-        @media (max-width: 600px) {
-            .section-title { font-size: 2rem; }
-            .section-subtitle { font-size: 1.5rem; margin-bottom: 2rem; }
-            .section-padding { padding: 50px 0; }
+            font-family: var(--font-decorative); /* Different font for Initials */
         }
 
     </style>
 </head>
 <body>
 
+<!-- Background Animated Hearts -->
 <div class="heart-container" id="heartContainer"></div>
 
 <header class="hero">
@@ -408,27 +380,29 @@
         </div>
         <div class="cd-box">
             <div class="cd-number" id="minutes">00</div>
-            <div class="cd-label">Mins</div>
+            <div class="cd-label">Minutes</div>
         </div>
         <div class="cd-box">
             <div class="cd-number" id="seconds">00</div>
-            <div class="cd-label">Secs</div>
+            <div class="cd-label">Seconds</div>
         </div>
     </div>
 </div>
 
 <section class="section-padding container" id="couple">
+    <!-- Static Heart Stickers -->
     <div class="decor-icon" style="top: 20px; left: 10px; color: var(--primary-green);">❤</div>
     <div class="decor-icon" style="bottom: 20px; right: 10px; color: var(--heart-red); opacity: 0.2;">❤</div>
 
     <h2 class="section-title">The Happy Couple</h2>
     
+    <!-- SUBTITLE FIXED: Explicit Title Case -->
     <p class="section-subtitle">A Match Made In Heaven</p>
 
     <div class="couple-grid">
         <div class="couple-card fade-in">
             <div class="couple-img-wrapper">
-                <img src="images/arya-portrait.jpg.jpeg" alt="Arya">
+                <img src="{% static 'invite/images/arya-portrait.jpg.jpeg' %}" alt="Arya">
             </div>
             <h3 class="couple-name">Arya</h3>
             <div class="couple-parents">
@@ -441,7 +415,7 @@
 
         <div class="couple-card fade-in" style="transition-delay: 0.2s">
             <div class="couple-img-wrapper">
-                <img src="images/gowdham-portrait.jpg.jpeg.png" alt="Gowdham">
+                <img src="{% static 'invite/images/gowdham-portrait.jpg.jpeg.png' %}" alt="Gowdham">
             </div>
             <h3 class="couple-name">Gowdham</h3>
             <div class="couple-parents">
@@ -458,12 +432,12 @@
         <p class="section-subtitle">Capturing our journey of love</p>
 
         <div class="gallery-grid">
-            <div class="gallery-item fade-in"><img src="images/gallery-1.jpg.jpeg" alt="Photo 1"></div>
-            <div class="gallery-item fade-in"><img src="images/gallery-2.jpg.jpeg" alt="Photo 2"></div>
-            <div class="gallery-item fade-in"><img src="images/gallery-3.jpg.jpeg" alt="Photo 3"></div>
-            <div class="gallery-item fade-in"><img src="images/gallery-4.jpg.jpeg" alt="Photo 4"></div>
-            <div class="gallery-item fade-in"><img src="images/gallery-5.jpg.jpeg" alt="Photo 5"></div>
-            <div class="gallery-item fade-in"><img src="images/gallery-6.jpg.jpeg" alt="Photo 6"></div>
+            <div class="gallery-item fade-in"><img src="{% static 'invite/images/gallery-1.jpg.jpeg' %}" alt="Photo 1"></div>
+            <div class="gallery-item fade-in"><img src="{% static 'invite/images/gallery-2.jpg.jpeg' %}" alt="Photo 2"></div>
+            <div class="gallery-item fade-in"><img src="{% static 'invite/images/gallery-3.jpg.jpeg' %}" alt="Photo 3"></div>
+            <div class="gallery-item fade-in"><img src="{% static 'invite/images/gallery-4.jpg.jpeg' %}" alt="Photo 4"></div>
+            <div class="gallery-item fade-in"><img src="{% static 'invite/images/gallery-5.jpg.jpeg' %}" alt="Photo 5"></div>
+            <div class="gallery-item fade-in"><img src="{% static 'invite/images/gallery-6.jpg.jpeg' %}" alt="Photo 6"></div>
         </div>
     </div>
 </section>
@@ -503,6 +477,7 @@
 </section>
 
 <footer>
+    <!-- Footer Names with large initials -->
     <div class="footer-names"><span>A</span>rya & <span>G</span>owdham</div>
     
     <p>25th January 2026 • Thank you for being part of our journey.</p>
@@ -513,7 +488,7 @@
     // ---- GENERATE FLOATING HEARTS ----
     document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('heartContainer');
-        const heartCount = 15; // Optimized for mobile
+        const heartCount = 20; // Number of hearts
         // Colors: Red, Pastel Green, White
         const colors = ['#E63946', '#8FBC8F', '#FFFFFF']; 
 
@@ -576,7 +551,7 @@
                 entry.target.classList.add('visible');
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15 });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
