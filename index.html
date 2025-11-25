@@ -115,7 +115,7 @@
         .hero-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* STATIC IMAGE PATH UPDATED */
+            /* Make sure image path matches your folder */
             background: url("images/banner-photo.jpg.png.png") no-repeat center center/cover;
             filter: brightness(0.9);
             transform: scale(1.05);
@@ -183,7 +183,6 @@
         }
         .cd-box { text-align: center; min-width: 60px; position: relative; }
         
-        /* Hidden colons on small screens to prevent breakage */
         @media (min-width: 600px) {
             .cd-box:not(:last-child)::after {
                 content: ":";
@@ -269,7 +268,7 @@
             opacity: 0.6;
         }
 
-        /* :::: GALLERY SECTION :::: */
+        /* :::: GALLERY SECTION (FIXED FOR MOBILE) :::: */
         .gallery-section { background: white; position: relative; }
         .gallery-section::before {
             content: "";
@@ -280,24 +279,30 @@
             z-index: 0;
         }
         
-        /* GRID FIXED FOR MOBILE (3 in a row) */
+        /* MASONRY LAYOUT FIX */
         .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Forces 3 columns everywhere */
-            gap: 10px;
-            position: relative; z-index: 1;
+            /* This forces 3 columns and allows items to stack without cropping */
+            column-count: 3; 
+            column-gap: 8px; 
+            position: relative; 
+            z-index: 1;
         }
         
         .gallery-item {
+            /* Prevents image from splitting between columns */
+            break-inside: avoid; 
+            margin-bottom: 8px;
             border-radius: 8px;
             overflow: hidden;
             border: 3px solid white;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            aspect-ratio: 1 / 1; /* Keeps images square */
         }
+        
         .gallery-item img {
-            width: 100%; height: 100%; object-fit: cover; 
-            display: block; transition: transform 0.5s ease;
+            width: 100%; 
+            height: auto; /* IMPORTANT: Shows full image height */
+            display: block; 
+            transition: transform 0.5s ease;
         }
         .gallery-item:hover img { transform: scale(1.05); }
 
@@ -372,7 +377,6 @@
             .section-title { font-size: 2rem; }
             .section-subtitle { font-size: 1.5rem; margin-bottom: 2rem; }
             .section-padding { padding: 50px 0; }
-            .gallery-grid { gap: 5px; } /* Tighter gap on phone */
         }
 
     </style>
