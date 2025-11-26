@@ -104,8 +104,8 @@
         /* :::: HERO SECTION :::: */
         .hero {
             position: relative;
-            height: 100vh; /* Fallback */
-            height: 100dvh; /* Mobile browser friendly */
+            height: 100vh;
+            height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -115,7 +115,6 @@
         .hero-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* Make sure image path matches your folder */
             background: url("images/banner-photo.jpg.png.png") no-repeat center center/cover;
             filter: brightness(0.9);
             transform: scale(1.05);
@@ -128,7 +127,7 @@
         }
         .hero-content h1 {
             font-family: var(--font-decorative);
-            font-size: 3.5rem; /* Mobile default */
+            font-size: 3.5rem;
             margin-bottom: 0.5rem;
             color: #fff;
             text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
@@ -268,7 +267,7 @@
             opacity: 0.6;
         }
 
-        /* :::: GALLERY SECTION (FIXED FOR MOBILE) :::: */
+        /* :::: GALLERY SECTION :::: */
         .gallery-section { background: white; position: relative; }
         .gallery-section::before {
             content: "";
@@ -279,9 +278,7 @@
             z-index: 0;
         }
         
-        /* MASONRY LAYOUT FIX */
         .gallery-grid {
-            /* This forces 3 columns and allows items to stack without cropping */
             column-count: 3; 
             column-gap: 8px; 
             position: relative; 
@@ -289,7 +286,6 @@
         }
         
         .gallery-item {
-            /* Prevents image from splitting between columns */
             break-inside: avoid; 
             margin-bottom: 8px;
             border-radius: 8px;
@@ -300,7 +296,7 @@
         
         .gallery-item img {
             width: 100%; 
-            height: auto; /* IMPORTANT: Shows full image height */
+            height: auto;
             display: block; 
             transition: transform 0.5s ease;
         }
@@ -350,7 +346,7 @@
 
         /* :::: FOOTER :::: */
         footer {
-            background: #2F4F4F; /* Dark Slate Gray */
+            background: #2F4F4F; 
             color: #ddd;
             text-align: center;
             padding: 50px 20px;
@@ -371,17 +367,21 @@
             vertical-align: middle;
             font-family: var(--font-decorative);
         }
-        
+
         /* Mobile Adjustments */
         @media (max-width: 600px) {
             .section-title { font-size: 2rem; }
             .section-subtitle { font-size: 1.5rem; margin-bottom: 2rem; }
             .section-padding { padding: 50px 0; }
+            .gallery-grid { column-count: 2; }
         }
 
     </style>
 </head>
 <body>
+
+<!-- BACKGROUND MUSIC (change src to your audio path) -->
+<audio id="bg-music" src="audio/wedding-song.mp3" preload="auto" loop></audio>
 
 <div class="heart-container" id="heartContainer"></div>
 
@@ -481,7 +481,6 @@
                 Sun, Jan 24th, 2026 <br> 06:00 PM Onwards
             </div>
             <p class="event-desc"><strong>Le-Shore Business Park</strong><br>Aranattukara, Thrissur.<br>Evening of Music & Dance.</p>
-            
         </div>
 
         <div class="event-box fade-in" style="transition-delay: 0.2s; border: 2px solid var(--gold-accent);">
@@ -493,7 +492,7 @@
         </div>
 
         <div class="event-box fade-in" style="transition-delay: 0.4s">
-            <div class="event-title">Wedding Lunch 🍽️</div>
+            <div class="event-title">Wedding Function 🥂</div>
             <div class="event-time-loc">
                 Sun, Jan 25th, 2026 <br> 10:00 AM Onwards
             </div>
@@ -510,35 +509,63 @@
 </footer>
 
 <script>
-    // ---- GENERATE FLOATING HEARTS ----
+    // ---- FLOATING HEARTS + MUSIC INIT ----
     document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('heartContainer');
-        const heartCount = 15; // Optimized for mobile
-        // Colors: Red, Pastel Green, White
+        const heartCount = 15; 
         const colors = ['#E63946', '#8FBC8F', '#FFFFFF']; 
 
         for(let i=0; i<heartCount; i++) {
             const heart = document.createElement('div');
             heart.classList.add('heart-float');
-            heart.innerHTML = '&#10084;'; // Heart Entity
+            heart.innerHTML = '&#10084;';
             
-            // Random Color
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             heart.style.color = randomColor;
 
-            // Add slight shadow to White hearts so they are visible
             if(randomColor === '#FFFFFF') {
                 heart.style.textShadow = "0 0 3px rgba(0,0,0,0.2)";
             }
 
-            // Random Positioning and Animation
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 5 + 8 + 's'; // 8-13 seconds
+            heart.style.animationDuration = Math.random() * 5 + 8 + 's';
             heart.style.animationDelay = Math.random() * 5 + 's';
-            heart.style.fontSize = Math.random() * 15 + 15 + 'px'; // size between 15px and 30px
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
             
             container.appendChild(heart);
         }
+
+        // ---- BACKGROUND MUSIC LOGIC (NO CONTROLS) ----
+        const audio = document.getElementById('bg-music');
+        const MUSIC_KEY = 'weddingMusicTime';
+
+        // Restore last position
+        const savedTime = parseFloat(localStorage.getItem(MUSIC_KEY) || '0');
+        if (!isNaN(savedTime) && savedTime >= 0) {
+            audio.currentTime = savedTime;
+        }
+
+        // Try to autoplay
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {
+                // If browser blocks autoplay, nothing to do (no button by request)
+            });
+        }
+
+        function saveTimeAndPause() {
+            try {
+                localStorage.setItem(MUSIC_KEY, audio.currentTime.toString());
+            } catch (e) {}
+            audio.pause();
+        }
+
+        window.addEventListener('beforeunload', saveTimeAndPause);
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') {
+                saveTimeAndPause();
+            }
+        });
     });
 
     // ---- COUNTDOWN TIMER ----
